@@ -144,17 +144,35 @@ class OtpTextView : FrameLayout {
     }
 
     private fun setFocus(length: Int) {
-        itemViews?.let { itemViews ->
-            for (i in itemViews.indices) {
-                if (i == length) {
-                    itemViews[i].setViewState(ItemView.ACTIVE)
+//         itemViews?.let { itemViews ->
+//             for (i in itemViews.indices) {
+//                 if (i == length) {
+//                     itemViews[i].setViewState(ItemView.ACTIVE)
+//                 } else {
+//                     itemViews[i].setViewState(ItemView.INACTIVE)
+//                 }
+//             }
+//             if (length == itemViews.size) {
+//                 itemViews[itemViews.size - 1].setViewState(ItemView.ACTIVE)
+//             }
+//         }
+        
+        itemViews?let{
+        itemViews.forEach{ tv->
+                  tv.setOnFocusChangeListener(OnFocusChangeListener { v: View?, hasFocus: Boolean ->
+            if (hasFocus) {
+                tv.setBackground(getDrawable(R.drawable.bg_et_focus_verification))
+            } else {
+                if (tv.getText().length > 0) {
+                    tv.setBackground(getDrawable(R.drawable.bg_et_focus_verification))
                 } else {
-                    itemViews[i].setViewState(ItemView.INACTIVE)
+                    tv.setBackground(getDrawable(R.drawable.bg_et_verification))
                 }
             }
-            if (length == itemViews.size) {
-                itemViews[itemViews.size - 1].setViewState(ItemView.ACTIVE)
-            }
+        })
+        
+        }
+            
         }
     }
 
